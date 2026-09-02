@@ -1,4 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import RegisterForm
 
-def home(request):
-    return render(request, 'gallery/home.html')
+
+def register(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+
+    else:
+        form = RegisterForm()
+
+    return render(
+        request,
+        "registration/register.html",
+        {"form": form}
+    )

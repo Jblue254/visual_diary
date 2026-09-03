@@ -1,34 +1,36 @@
-{% extends 'base.html' %}
+<div class="mt-6">
 
-{% block content %}
+    <p class="mb-4">
+         {{ photo.total_likes }} Likes |
+         {{ photo.total_dislikes }} Dislikes
+    </p>
 
-<div class="bg-white shadow rounded-lg overflow-hidden">
+    {% if user.is_authenticated %}
 
-    <img
-        src="{{ photo.image.url }}"
-        class="w-full max-h-[600px] object-cover"
-    >
+    <div class="flex gap-4">
 
-    <div class="p-6">
+        <a
+            href="{% url 'like_photo' photo.id %}"
+            class="bg-green-600 text-white px-4 py-2 rounded"
+        >
+            Like
+        </a>
 
-        <h1 class="text-3xl font-bold mb-4">
-            {{ photo.title }}
-        </h1>
-
-        <p class="mb-4">
-            {{ photo.description }}
-        </p>
-
-        <p class="text-gray-600 mb-4">
-            Tags: {{ photo.tags }}
-        </p>
-
-        <p>
-             {{ photo.total_likes }} Likes
-        </p>
+        <a
+            href="{% url 'dislike_photo' photo.id %}"
+            class="bg-red-600 text-white px-4 py-2 rounded"
+        >
+            Dislike
+        </a>
 
     </div>
 
-</div>
+    {% else %}
 
-{% endblock %}
+    <p>
+        Please login to like or dislike photos.
+    </p>
+
+    {% endif %}
+
+</div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect , get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm, ProfileForm
+from .forms import RegisterForm, ProfileForm, PhotoForm
 from .models import Photo
 
 
@@ -92,3 +92,25 @@ def dislike_photo(request, pk):
     photo.likes.remove(request.user)
 
     return redirect("photo_detail", pk=pk)
+@login_required
+def upload_photo(request):
+
+    if request.method == "POST":
+
+        form = PhotoForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+
+    else:
+        form = PhotoForm()
+
+    return render(
+        request,
+        "gallery/upload_photo.html",
+        {"form": form}
+    )

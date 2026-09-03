@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
 
     <nav class="bg-white shadow-md">
@@ -20,33 +22,37 @@
             <div class="space-x-4">
                 <div class="space-x-4">
 
-    <a href="{% url 'home' %}">
-        Home
-    </a>
+                    <a href="{% url 'home' %}">
+                        Home
+                    </a>
 
-    {% if user.is_authenticated %}
+                    {% if user.is_authenticated %}
 
-        <a href="{% url 'profile' %}">
-            Profile
-        </a>
+                    <a href="{% url 'profile' %}">
+                        Profile
+                    </a>
 
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
+                    <a href="{% url 'upload_photo' %}">
+                        Upload
+                    </a>
 
-    {% else %}
+                    <a href="{% url 'logout' %}">
+                        Logout
+                    </a>
 
-        <a href="{% url 'login' %}">
-            Login
-        </a>
+                    {% else %}
 
-        <a href="{% url 'register' %}">
-            Register
-        </a>
+                    <a href="{% url 'login' %}">
+                        Login
+                    </a>
 
-    {% endif %}
+                    <a href="{% url 'register' %}">
+                        Register
+                    </a>
 
-</div>
+                    {% endif %}
+
+                </div>
             </div>
 
         </div>
@@ -58,4 +64,5 @@
     </div>
 
 </body>
+
 </html>

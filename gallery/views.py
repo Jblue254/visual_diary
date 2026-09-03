@@ -74,3 +74,21 @@ def profile(request):
             "profile": profile
         }
     )
+@login_required
+def like_photo(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+
+    photo.likes.add(request.user)
+    photo.dislikes.remove(request.user)
+
+    return redirect("photo_detail", pk=pk)
+
+
+@login_required
+def dislike_photo(request, pk):
+    photo = get_object_or_404(Photo, pk=pk)
+
+    photo.dislikes.add(request.user)
+    photo.likes.remove(request.user)
+
+    return redirect("photo_detail", pk=pk)

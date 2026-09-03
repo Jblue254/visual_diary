@@ -21,15 +21,8 @@ class Profile(models.Model):
 class Photo(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-
-    image = models.ImageField(
-        upload_to="photos/"
-    )
-
-    tags = models.CharField(
-        max_length=200,
-        help_text="Separate tags with commas"
-    )
+    image = models.ImageField(upload_to="photos/")
+    tags = models.CharField(max_length=200)
 
     likes = models.ManyToManyField(
         User,
@@ -37,12 +30,19 @@ class Photo(models.Model):
         blank=True
     )
 
-    created_at = models.DateTimeField(
-        auto_now_add=True
+    dislikes = models.ManyToManyField(
+        User,
+        related_name="disliked_photos",
+        blank=True
     )
+
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def total_likes(self):
         return self.likes.count()
+
+    def total_dislikes(self):
+        return self.dislikes.count()
 
     def __str__(self):
         return self.title

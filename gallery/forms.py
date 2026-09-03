@@ -2,16 +2,19 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile
+from .models import Profile, Photo
 
 
-class ProfileForm(forms.ModelForm):
+class PhotoForm(forms.ModelForm):
 
     class Meta:
-        model = Profile
+        model = Photo
+
         fields = [
-            'bio',
-            'profile_picture'
+            "title",
+            "description",
+            "image",
+            "tags"
         ]
 
 

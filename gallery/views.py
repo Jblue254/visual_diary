@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect , get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, ProfileForm, PhotoForm
-from .models import Photo
+from .models import Profile, Photo
 
 
 def home(request):
@@ -48,10 +48,11 @@ def register(request):
         {"form": form}
     )
 
-
 @login_required
 def profile(request):
-    profile = request.user.profile
+    profile, created = Profile.objects.get_or_create(
+        user=request.user
+    )
 
     if request.method == "POST":
         form = ProfileForm(
@@ -62,6 +63,7 @@ def profile(request):
 
         if form.is_valid():
             form.save()
+            return redirect("profile")
 
     else:
         form = ProfileForm(instance=profile)
@@ -74,6 +76,8 @@ def profile(request):
             "profile": profile
         }
     )
+
+
 @login_required
 def like_photo(request, pk):
     photo = get_object_or_404(Photo, pk=pk)

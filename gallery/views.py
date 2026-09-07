@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm, ProfileForm, PhotoForm
 from .models import Profile, Photo
+from django.contrib.auth.views import LoginView
 
 
 def home(request):
@@ -118,3 +119,11 @@ def upload_photo(request):
         "gallery/upload_photo.html",
         {"form": form}
     )
+class CustomLoginView(LoginView):
+    template_name = "registration/login.html"
+
+    def get_success_url(self):
+        if self.request.user.is_staff:
+            return "/admin/"
+
+        return "/"
